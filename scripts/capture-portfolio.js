@@ -11,10 +11,10 @@ if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
 }
 
-const targetUrl = 'https://portfolio2078.netlify.app/';
+const liveUrl = 'https://portfolio2078.netlify.app/';
 
-async function captureCorrectScreenshots() {
-  console.log('🚀 Launching Chrome to capture distinctly scrolled sections...');
+async function captureLivePortfolio() {
+  console.log(`🚀 Connecting to ${liveUrl} to capture live screenshots...`);
   const browser = await puppeteer.launch({
     executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     headless: true,
@@ -22,87 +22,77 @@ async function captureCorrectScreenshots() {
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1.5 });
+  await page.setCacheEnabled(false);
+  await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 2 });
 
-  console.log(`🌐 Navigating to ${targetUrl}...`);
-  await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 30000 }).catch(async () => {
-    await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await page.goto(liveUrl, { waitUntil: 'networkidle2', timeout: 30000 }).catch(async () => {
+    await page.goto(liveUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
   });
 
-  // Hide any potential netlify badges or injected drawer frames
+  // Ensure any injected dev tools or badges are cleaned
   await page.evaluate(() => {
-    const selectors = [
-      '#netlify-drawer',
-      '.netlify-badge',
-      '[data-netlify-drawer]',
-      '.netlify-feedback-drawer',
-      'iframe[src*="netlify"]'
-    ];
-    selectors.forEach(sel => {
-      document.querySelectorAll(sel).forEach(el => el.remove());
-    });
+    document.querySelectorAll('#netlify-drawer, .netlify-badge, [data-netlify-drawer], .netlify-feedback-drawer, iframe[src*="netlify"]').forEach(el => el.remove());
   });
 
-  await new Promise(r => setTimeout(r, 2500));
+  await new Promise(r => setTimeout(r, 2000));
 
-  const saveBoth = async (filename) => {
-    const localPath = path.join(outputDir, filename);
-    // Notice: NO clip parameter, so it captures the exact scrolled viewport!
-    await page.screenshot({ path: localPath, type: 'png' });
+  const save = async (name) => {
+    const local = path.join(outputDir, name);
+    await page.screenshot({ path: local, type: 'png' });
     if (fs.existsSync(artifactDir)) {
-      const artPath = path.join(artifactDir, filename);
-      fs.copyFileSync(localPath, artPath);
+      fs.copyFileSync(local, path.join(artifactDir, name));
     }
+    console.log(`✅ Saved ${name}`);
   };
 
-  // 1. Hero Showcase (top of page)
-  console.log('📸 1. Capturing 01_hero_showcase.png...');
+  // 1. Hero Showcase
+  console.log('📸 Capturing Hero...');
   await page.evaluate(() => window.scrollTo(0, 0));
-  await new Promise(r => setTimeout(r, 1200));
-  await saveBoth('01_hero_showcase.png');
+  await new Promise(r => setTimeout(r, 1000));
+  await save('01_hero_showcase.png');
 
   // 2. Featured Projects Spotlight
-  console.log('📸 2. Capturing 02_featured_spotlight.png...');
+  console.log('📸 Capturing Featured Spotlight...');
   await page.evaluate(() => {
     const el = document.getElementById('featured') || document.querySelector('section:nth-of-type(2)');
     if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
-    else window.scrollTo(0, 950);
+    else window.scrollTo(0, 850);
   });
-  await new Promise(r => setTimeout(r, 1200));
-  await saveBoth('02_featured_spotlight.png');
+  await new Promise(r => setTimeout(r, 1000));
+  await save('02_featured_spotlight.png');
 
-  // 3. Work / Full Project Gallery Grid
-  console.log('📸 3. Capturing 03_project_gallery.png...');
+  // 3. Work / Full 15 Project Gallery
+  console.log('📸 Capturing Project Gallery...');
   await page.evaluate(() => {
     const el = document.getElementById('work');
     if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
-    else window.scrollTo(0, 2100);
+    else window.scrollTo(0, 1850);
   });
-  await new Promise(r => setTimeout(r, 1200));
-  await saveBoth('03_project_gallery.png');
+  await new Promise(r => setTimeout(r, 1000));
+  await save('03_project_gallery.png');
 
   // 4. Services & Process
-  console.log('📸 4. Capturing 04_services_process.png...');
+  console.log('📸 Capturing Services & Process...');
   await page.evaluate(() => {
     const el = document.getElementById('services') || document.getElementById('process');
     if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
-    else window.scrollTo(0, 3600);
+    else window.scrollTo(0, 3400);
   });
-  await new Promise(r => setTimeout(r, 1200));
-  await saveBoth('04_services_process.png');
+  await new Promise(r => setTimeout(r, 1000));
+  await save('04_services_process.png');
 
-  // 5. Contact Section / Project Order Slip
-  console.log('📸 5. Capturing 05_contact_order_slip.png...');
+  // 5. Contact Section / Order Slip
+  console.log('📸 Capturing Contact Section...');
   await page.evaluate(() => {
     const el = document.getElementById('contact');
     if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
-    else window.scrollTo(0, 5200);
+    else window.scrollTo(0, 5000);
   });
-  await new Promise(r => setTimeout(r, 1200));
-  await saveBoth('05_contact_order_slip.png');
+  await new Promise(r => setTimeout(r, 1000));
+  await save('05_contact_order_slip.png');
 
   await browser.close();
-  console.log('🎉 Done! All 5 distinct section screenshots saved.');
+  console.log('🎉 All live screenshots captured directly from https://portfolio2078.netlify.app/ !');
 }
 
-captureCorrectScreenshots();
+captureLivePortfolio();
