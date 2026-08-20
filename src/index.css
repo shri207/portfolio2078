@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+  
+  body {
+    background-color: #0d0d0f;
+    color: #F5F5F0;
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  h1, h2, h3, .font-pixel {
+    font-family: 'Pixelify Sans', 'Space Grotesk', cursive, sans-serif;
+  }
+}
+
+/* Custom Arcade Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0d0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2A33;
+  border-radius: 2px;
+  border: 1px solid #3d3d4a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFE500;
+}
+
+/* Grid & Dots Patterns */
+.bg-arcade-grid {
+  background-size: 36px 36px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+}
+
+.bg-arcade-dots {
+  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+}
+
+.bg-radial-vignette {
+  background: radial-gradient(circle at 50% 0%, rgba(255, 229, 0, 0.06) 0%, transparent 60%);
+}
+
+/* Tape / Marker Effect */
+.tape-yellow {
+  display: inline-block;
+  background-color: #FFE500;
+  color: #000000;
+  transform: rotate(-1.5deg);
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.4);
+}
+
+/* Squiggly Underline */
+.squiggle-yellow {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: #FFE500;
+  text-underline-offset: 6px;
+}
+
+.squiggle-purple {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: #B8A1FF;
+  text-underline-offset: 6px;
+}
+
+/* Neo-Brutalist Cards */
+.brutalist-card {
+  background-color: #141417;
+  border: 1px solid #2A2A33;
+  box-shadow: 4px 4px 0px #000000;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.brutalist-card:hover {
+  border-color: #FFE500;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000000, 0 0 16px rgba(255, 229, 0, 0.12);
+}
+
+/* Brutalist Buttons */
+.btn-arcade-yellow {
+  background-color: #FFE500;
+  color: #000000;
+  font-weight: 700;
+  border: 2px solid #000000;
+  box-shadow: 3px 3px 0px #000000;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-arcade-yellow:hover {
+  background-color: #F0D800;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #000000;
+}
+
+.btn-arcade-yellow:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px #000000;
+}
+
+.btn-arcade-dark {
+  background-color: #141417;
+  color: #F5F5F0;
+  border: 1px solid #3d3d4a;
+  box-shadow: 3px 3px 0px #000000;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-arcade-dark:hover {
+  border-color: #FFE500;
+  color: #FFE500;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #000000;
+}
+
+.btn-arcade-dark:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px #000000;
+}
+
+/* Pill Badges */
+.pill-yellow {
+  background-color: #FFE500;
+  color: #000000;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.pill-purple {
+  background-color: #B8A1FF;
+  color: #000000;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.pill-outline {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  color: #9E9EA8;
+  border-radius: 9999px;
+}
+
+/* Interactive Cursor Glow */
+.cursor-blob {
+  pointer-events: none;
+  position: fixed;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s cubic-bezier(0.16, 1, 0.3, 1), height 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease;
+  z-index: 9999;
+}
+
+@media (pointer: coarse) {
+  .cursor-blob {
+    display: none !important;
+  }
+}
