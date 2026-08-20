@@ -13,16 +13,16 @@ if (!fs.existsSync(outputDir)) {
 
 const targetUrl = 'https://portfolio2078.netlify.app/';
 
-async function capturePortfolioScreenshots() {
-  console.log('🚀 Launching Chrome to capture fresh live portfolio screenshots...');
+async function captureCorrectScreenshots() {
+  console.log('🚀 Launching Chrome to capture distinctly scrolled sections...');
   const browser = await puppeteer.launch({
     executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--window-size=1600,1000']
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu']
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 2 });
+  await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1.5 });
 
   console.log(`🌐 Navigating to ${targetUrl}...`);
   await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 30000 }).catch(async () => {
@@ -43,76 +43,66 @@ async function capturePortfolioScreenshots() {
     });
   });
 
-  // Let fonts, gradients, and entry animations settle
-  await new Promise(r => setTimeout(r, 3500));
+  await new Promise(r => setTimeout(r, 2500));
 
-  const saveBoth = async (filename, options) => {
+  const saveBoth = async (filename) => {
     const localPath = path.join(outputDir, filename);
-    await page.screenshot({ path: localPath, ...options });
+    // Notice: NO clip parameter, so it captures the exact scrolled viewport!
+    await page.screenshot({ path: localPath, type: 'png' });
     if (fs.existsSync(artifactDir)) {
       const artPath = path.join(artifactDir, filename);
       fs.copyFileSync(localPath, artPath);
     }
   };
 
-  // 1. Hero Showcase
-  console.log('📸 1. Capturing Hero Section...');
+  // 1. Hero Showcase (top of page)
+  console.log('📸 1. Capturing 01_hero_showcase.png...');
   await page.evaluate(() => window.scrollTo(0, 0));
-  await new Promise(r => setTimeout(r, 800));
-  await saveBoth('01_hero_showcase.png', {
-    clip: { x: 0, y: 0, width: 1440, height: 900 }
-  });
+  await new Promise(r => setTimeout(r, 1200));
+  await saveBoth('01_hero_showcase.png');
 
   // 2. Featured Projects Spotlight
-  console.log('📸 2. Capturing Featured Projects Spotlight...');
+  console.log('📸 2. Capturing 02_featured_spotlight.png...');
   await page.evaluate(() => {
     const el = document.getElementById('featured') || document.querySelector('section:nth-of-type(2)');
     if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
-    else window.scrollTo(0, 880);
+    else window.scrollTo(0, 950);
   });
   await new Promise(r => setTimeout(r, 1200));
-  await saveBoth('02_featured_spotlight.png', {
-    clip: { x: 0, y: 0, width: 1440, height: 900 }
-  });
+  await saveBoth('02_featured_spotlight.png');
 
-  // 3. Work / Full Project Gallery
-  console.log('📸 3. Capturing Project Gallery...');
+  // 3. Work / Full Project Gallery Grid
+  console.log('📸 3. Capturing 03_project_gallery.png...');
   await page.evaluate(() => {
     const el = document.getElementById('work');
     if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
-    else window.scrollTo(0, 1850);
+    else window.scrollTo(0, 2100);
   });
   await new Promise(r => setTimeout(r, 1200));
-  await saveBoth('03_project_gallery.png', {
-    clip: { x: 0, y: 0, width: 1440, height: 900 }
-  });
+  await saveBoth('03_project_gallery.png');
 
   // 4. Services & Process
-  console.log('📸 4. Capturing Services & Process...');
+  console.log('📸 4. Capturing 04_services_process.png...');
   await page.evaluate(() => {
     const el = document.getElementById('services') || document.getElementById('process');
     if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
-    else window.scrollTo(0, 3300);
+    else window.scrollTo(0, 3600);
   });
   await new Promise(r => setTimeout(r, 1200));
-  await saveBoth('04_services_process.png', {
-    clip: { x: 0, y: 0, width: 1440, height: 900 }
-  });
+  await saveBoth('04_services_process.png');
 
   // 5. Contact Section / Project Order Slip
-  console.log('📸 5. Capturing Contact Order Slip...');
+  console.log('📸 5. Capturing 05_contact_order_slip.png...');
   await page.evaluate(() => {
     const el = document.getElementById('contact');
     if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
-    else window.scrollTo(0, 4900);
+    else window.scrollTo(0, 5200);
   });
   await new Promise(r => setTimeout(r, 1200));
-  await saveBoth('05_contact_order_slip.png', {
-    clip: { x: 0, y: 0, width: 1440, height: 900 }
-  });
+  await saveBoth('05_contact_order_slip.png');
 
   await browser.close();
-  console.log('🎉 Fresh high-resolution screenshots saved successfully!');
+  console.log('🎉 Done! All 5 distinct section screenshots saved.');
 }
 
-capturePortfolioScreenshots();
+captureCorrectScreenshots();
