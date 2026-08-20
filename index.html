@@ -13,10 +13,10 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://github.com/shri207" />
+    <meta property="og:url" content="https://github.com/shri207/portfolio2078" />
     <meta property="og:title" content="Shri Kanth P. — Web Designer & Frontend Developer" />
     <meta property="og:description" content="Portfolio of Shri Kanth P., showcasing modern websites, UI/UX designs, AI products and creative digital experiences." />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop" />
+    <meta property="og:image" content="/projects/orion-ai.webp" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
@@ -28,10 +28,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Pixelify+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
+  <body class="bg-background text-text-primary antialiased selection:bg-arcade-yellow selection:text-black min-h-screen overflow-x-hidden font-sans">
     <div id="root"></div>
 
     <!-- Hidden form for Netlify build-time form crawler & automatic detection -->
-    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+    <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="hidden" name="bot-field" />
       <input type="text" name="name" />
       <input type="email" name="email" />
       <input type="text" name="projectType" />

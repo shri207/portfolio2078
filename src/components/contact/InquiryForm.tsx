@@ -107,7 +107,20 @@ export const InquiryForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 sm:p-8 rounded-2xl bg-arcade-card border-2 border-arcade-border-strong shadow-brutalist-card space-y-6">
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      onSubmit={handleSubmit}
+      className="p-6 sm:p-8 rounded-2xl bg-arcade-card border-2 border-arcade-border-strong shadow-brutalist-card space-y-6"
+    >
+      {/* Hidden inputs for Netlify Forms */}
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="hidden" name="bot-field" />
+      <input type="hidden" name="projectType" value={formData.projectType} />
+      <input type="hidden" name="budget" value={formData.budget} />
+
       <div className="flex items-center justify-between pb-4 border-b border-arcade-border">
         <div>
           <h3 className="font-pixel text-xl sm:text-2xl font-bold text-white">START A PROJECT ORDER SLIP</h3>
@@ -168,6 +181,7 @@ export const InquiryForm: React.FC = () => {
           <label className="block text-xs font-mono text-text-secondary">Your Name *</label>
           <input
             type="text"
+            name="name"
             required
             placeholder="e.g. Alex Mercer"
             value={formData.name}
@@ -180,6 +194,7 @@ export const InquiryForm: React.FC = () => {
           <label className="block text-xs font-mono text-text-secondary">Your Email *</label>
           <input
             type="email"
+            name="email"
             required
             placeholder="e.g. alex@company.com"
             value={formData.email}
@@ -196,6 +211,7 @@ export const InquiryForm: React.FC = () => {
         </label>
         <textarea
           required
+          name="message"
           rows={4}
           placeholder="Describe what you're building, target audience, core features, and any links or references..."
           value={formData.message}
