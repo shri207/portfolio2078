@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
               </h3>
             </div>
             <p className="text-xs text-text-secondary font-mono tracking-wider uppercase">
-              WEB DESIGNER · FRONTEND DEVELOPER · HYDERABAD & REMOTE
+              WEB DESIGNER · FRONTEND DEVELOPER · AVAILABLE WORLDWIDE
             </p>
           </div>
 
@@ -109,7 +109,7 @@ export const Footer: React.FC = () => {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-arcade-mint animate-pulse" />
-              <span>IST (HYDERABAD): <strong className="text-white">{time || '16:20:00 PM'}</strong></span>
+              <span>LOCAL TIME: <strong className="text-white">{time || '16:20:00 PM'}</strong></span>
             </div>
             <span>•</span>
             <span className="text-arcade-yellow font-pixel">CRAFTED WITH OBSESSION</span>

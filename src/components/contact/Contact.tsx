@@ -110,7 +110,7 @@ export const Contact: React.FC = () => {
             <div className="pt-2 flex flex-wrap gap-4 text-xs font-mono text-text-secondary">
               <div className="flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5 text-arcade-yellow" />
-                <span>HYDERABAD / REMOTE (GLOBAL)</span>
+                <span>AVAILABLE WORLDWIDE / REMOTE</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5 text-arcade-mint" />

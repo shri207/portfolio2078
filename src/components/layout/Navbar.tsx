@@ -153,7 +153,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
                 </span>
               </div>
               <span className="text-[10px] font-mono tracking-widest text-text-muted uppercase">
-                HYDERABAD · REMOTE
+                AVAILABLE · REMOTE
               </span>
             </div>
           </a>

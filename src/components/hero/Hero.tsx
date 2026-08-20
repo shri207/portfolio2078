@@ -43,10 +43,10 @@ export const Hero: React.FC = () => {
           >
             {/* Top 3 Pill Badges matching reference screenshot */}
             <div className="flex flex-wrap items-center gap-2.5">
-              {/* Yellow Location Pill */}
+              {/* Location Pill */}
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-arcade-yellow text-black font-pixel text-xs font-bold rounded-full border border-black shadow-[2px_2px_0px_#000000]">
                 <MapPin className="w-3.5 h-3.5 fill-black text-arcade-yellow" />
-                <span>HYDERABAD / REMOTE</span>
+                <span>REMOTE / WORLDWIDE</span>
               </div>
 
               {/* Lavender Vibe Pill */}
